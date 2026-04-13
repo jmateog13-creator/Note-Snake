@@ -60,8 +60,20 @@ class GameEngine {
   // ─── Setup ───────────────────────────────────────────────────────────────
 
   resize() {
-    const maxSize = Math.min(window.innerWidth - 40, window.innerHeight - 175, 900);
-    const size = Math.max(maxSize, 280);
+    // Llegeix les CSS custom properties per sincronitzar amb el layout
+    const style   = getComputedStyle(document.documentElement);
+    const hudH    = parseInt(style.getPropertyValue('--hud-h'))        || 115;
+    const dpadW   = parseInt(style.getPropertyValue('--dpad-total-w')) || 205;
+    const isGame  = document.body.dataset.state === 'jugando';
+
+    const padLeft   = isGame ? dpadW : 40;
+    const padRight  = 20;
+    const padBottom = 20;
+
+    const availW = window.innerWidth  - padLeft - padRight;
+    const availH = window.innerHeight - hudH    - padBottom;
+    const size   = Math.max(Math.min(availW, availH, 900), 180);
+
     this.logicalSize = size;
     this.cellSize    = size / GRID;
     this.canvas.width  = size * this.dpr;

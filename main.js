@@ -75,11 +75,16 @@ document.addEventListener('keydown', e => {
 window.addEventListener('resize', () => {
   if (currentState === STATE.JUGANDO) engine.resize();
 });
+// Orientació mòbil
+window.addEventListener('orientationchange', () => {
+  setTimeout(() => { if (currentState === STATE.JUGANDO) engine.resize(); }, 200);
+});
 
 // ─── State Machine ────────────────────────────────────────────────────────────
 
 function transitionTo(state, data = {}) {
   currentState = state;
+  document.body.dataset.state = state.toLowerCase(); // sincronitza CSS padding
   engine.stopGame();
   uiOverlay.innerHTML       = '';
   uiOverlay.style.pointerEvents = 'none';
