@@ -45,10 +45,14 @@ engine.onSequenceComplete = (seqIdx, score) => {
 };
 
 engine.onGameOver = (score, progress) => {
+  window.Bridge?.send({ completat: false, errors: 1 });
   transitionTo(STATE.GAME_OVER, { score, progress });
 };
 
 engine.onVictory = (score) => {
+  const isLastLevel = currentCampaignIdx !== null && currentCampaignIdx >= MUSIC_DATA.campaign.length - 1;
+  window.Bridge?.send({ completat: true, perfecte: true });
+  if (isLastLevel) window.Bridge?.sendOnce({ id: 'note-snake-complet', completat: true, perfecte: true });
   if (currentCampaignIdx !== null) {
     const completedLevel = currentCampaignIdx + 1; // 1-based
     if (completedLevel >= _maxUnlocked && completedLevel < MUSIC_DATA.campaign.length) {
@@ -178,6 +182,7 @@ function _renderMenuNivells() {
 // ─── MENU MAESTRO ─────────────────────────────────────────────────────────────
 
 function _renderMenuMaestro() {
+  currentCampaignIdx = null; // Mode Mestre no és campanya: evita reutilitzar un idx d'una sessió de campanya anterior
   const roots = ["Do","Re","Mi","Fa","Sol","La","Si"];
   const alts  = [
     { val: "Natural",   label: "Natural" },
@@ -439,6 +444,7 @@ function _retryGame() {
 
 function _launchGame(sequences, name) {
   activeScaleData = { sequences, name };
+  window.Bridge?.startClock();
   transitionTo(STATE.JUGANDO, { sequences, levelName: name });
   engine.startGame(sequences);
 }
