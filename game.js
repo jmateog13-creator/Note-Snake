@@ -97,6 +97,7 @@ class GameEngine {
     this.particles  = [];
     this.flashAlpha = 0;
     this.isRunning  = true;
+    this.vides      = 3;      // tres oportunitats per partida (28-09-2026)
 
     this._applySequence(sequences[0]);
 
@@ -218,6 +219,12 @@ class GameEngine {
     this._burst(nx, ny, C.noteTrap, 22);
     this.flashColor = C.flashRed;
     this.flashAlpha = 1.0;
+    // Abans, una nota equivocada era mort seca: a l'aula (3E) això volia dir
+    // tornar a la primera de vuit un cop i un altre. Tres oportunitats: l'error
+    // ha d'ensenyar, no expulsar.
+    if (this.vides === undefined) this.vides = 3;
+    this.vides -= 1;
+    if (this.vides > 0) { this._spawnNotes(); return; }
     this._triggerGameOver();
   }
 
