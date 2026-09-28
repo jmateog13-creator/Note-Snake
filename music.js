@@ -5,6 +5,8 @@ const CHROMATIC = ["Do", "Do#", "Re", "Mib", "Mi", "Fa", "Fa#", "Sol", "Sol#", "
 
 // coloredNotes: false → totes les notes es veuen igual (gris), sense pista visual
 
+// Política 1★ (28-09-2026): velocitat constant (160 ms/pas) a tots els nivells;
+// cap nivell exigeix reflexos.
 const MUSIC_DATA = {
   campaign: [
     {
@@ -18,52 +20,52 @@ const MUSIC_DATA = {
       level: 2,
       name: "Nivell 2: Doble Passada",
       sequences: [
-        { scale: DIATONIC, speed: 155, trapCount: 2, coloredNotes: true },
-        { scale: DIATONIC, speed: 138, trapCount: 3, coloredNotes: true }
+        { scale: DIATONIC, speed: 160, trapCount: 2, coloredNotes: true },
+        { scale: DIATONIC, speed: 160, trapCount: 3, coloredNotes: true }
       ]
     },
     {
       level: 3,
       name: "Nivell 3: Triple Passada",
       sequences: [
-        { scale: DIATONIC, speed: 138, trapCount: 3, coloredNotes: true },
-        { scale: DIATONIC, speed: 118, trapCount: 4, coloredNotes: true },
-        { scale: DIATONIC, speed: 100, trapCount: 5, coloredNotes: false }
+        { scale: DIATONIC, speed: 160, trapCount: 3, coloredNotes: true },
+        { scale: DIATONIC, speed: 160, trapCount: 4, coloredNotes: true },
+        { scale: DIATONIC, speed: 160, trapCount: 5, coloredNotes: false }
       ]
     },
     {
       level: 4,
       name: "Nivell 4: El Caos Cromàtic",
       sequences: [
-        { scale: CHROMATIC, speed: 112, trapCount: 3, coloredNotes: true }
+        { scale: CHROMATIC, speed: 160, trapCount: 3, coloredNotes: true }
       ]
     },
     {
       level: 5,
       name: "Nivell 5: Caos Doble",
       sequences: [
-        { scale: CHROMATIC, speed: 108, trapCount: 3, coloredNotes: true },
-        { scale: CHROMATIC, speed: 90,  trapCount: 4, coloredNotes: true }
+        { scale: CHROMATIC, speed: 160, trapCount: 3, coloredNotes: true },
+        { scale: CHROMATIC, speed: 160,  trapCount: 4, coloredNotes: true }
       ]
     },
     {
       level: 6,
       name: "Nivell 6: Caos Triple",
       sequences: [
-        { scale: CHROMATIC, speed: 105, trapCount: 3, coloredNotes: true },
-        { scale: CHROMATIC, speed: 88,  trapCount: 4, coloredNotes: true },
-        { scale: CHROMATIC, speed: 72,  trapCount: 5, coloredNotes: true }
+        { scale: CHROMATIC, speed: 160, trapCount: 3, coloredNotes: true },
+        { scale: CHROMATIC, speed: 160,  trapCount: 4, coloredNotes: true },
+        { scale: CHROMATIC, speed: 160,  trapCount: 5, coloredNotes: true }
       ]
     },
     {
       level: 7,
       name: "Nivell 7: ??? SORPRESA",
       sequences: [
-        { scale: DIATONIC,  speed: 132, trapCount: 3, coloredNotes: true  },
-        { scale: CHROMATIC, speed: 118, trapCount: 4, coloredNotes: true  },
-        { scale: CHROMATIC, speed: 105, trapCount: 5, coloredNotes: true  },
-        { scale: DIATONIC,  speed: 96,  trapCount: 5, coloredNotes: false },
-        { scale: DIATONIC,  speed: 88,  trapCount: 5, coloredNotes: false }
+        { scale: DIATONIC,  speed: 160, trapCount: 3, coloredNotes: true  },
+        { scale: CHROMATIC, speed: 160, trapCount: 4, coloredNotes: true  },
+        { scale: CHROMATIC, speed: 160, trapCount: 5, coloredNotes: true  },
+        { scale: DIATONIC,  speed: 160,  trapCount: 5, coloredNotes: false },
+        { scale: DIATONIC,  speed: 160,  trapCount: 5, coloredNotes: false }
       ]
     }
   ],

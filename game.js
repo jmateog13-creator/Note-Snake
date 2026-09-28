@@ -169,6 +169,13 @@ class GameEngine {
 
     // Self-collision
     if (this.snake.some(s => s.x === nx && s.y === ny)) {
+      // Política 1★ (28-09-2026): mossegar-se resta una vida i encongeix la serp;
+      // game over només quan s'esgoten les tres vides.
+      if (this.vides === undefined) this.vides = 3;
+      this.vides -= 1;
+      this.flashColor = C.flashRed;
+      this.flashAlpha = 1.0;
+      if (this.vides > 0) { this.snake = [{ x: head.x, y: head.y }]; this._spawnNotes(); return; }
       this._triggerGameOver(); return;
     }
 
