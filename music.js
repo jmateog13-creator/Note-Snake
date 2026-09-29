@@ -7,6 +7,7 @@ const CHROMATIC = ["Do", "Do#", "Re", "Mib", "Mi", "Fa", "Fa#", "Sol", "Sol#", "
 
 // Política 1★ (28-09-2026): velocitat constant (160 ms/pas) a tots els nivells;
 // cap nivell exigeix reflexos.
+/* Política 1★ (29-09-2026, revisat): campanya de 6 nivells (3 diatònics + cromàtics 4-6, sense el 7 'SORPRESA'), ~120 notes, 4-5 min. */
 const MUSIC_DATA = {
   campaign: [
     {
@@ -55,17 +56,6 @@ const MUSIC_DATA = {
         { scale: CHROMATIC, speed: 160, trapCount: 3, coloredNotes: true },
         { scale: CHROMATIC, speed: 160,  trapCount: 4, coloredNotes: true },
         { scale: CHROMATIC, speed: 160,  trapCount: 5, coloredNotes: true }
-      ]
-    },
-    {
-      level: 7,
-      name: "Nivell 7: ??? SORPRESA",
-      sequences: [
-        { scale: DIATONIC,  speed: 160, trapCount: 3, coloredNotes: true  },
-        { scale: CHROMATIC, speed: 160, trapCount: 4, coloredNotes: true  },
-        { scale: CHROMATIC, speed: 160, trapCount: 5, coloredNotes: true  },
-        { scale: DIATONIC,  speed: 160,  trapCount: 5, coloredNotes: false },
-        { scale: DIATONIC,  speed: 160,  trapCount: 5, coloredNotes: false }
       ]
     }
   ],
