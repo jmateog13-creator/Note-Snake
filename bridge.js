@@ -73,7 +73,7 @@ window.Bridge = Bridge;
   if (window.__atFinalCarregat) return;
   window.__atFinalCarregat = true;
   var s = document.createElement('script');
-  s.src = '/1.Gamificacion/_tools/at-final.js';
+  s.src = '/1.Gamificacion/_tools/at-final.js?v=2';
   s.async = true;
   document.head.appendChild(s);
 })();
