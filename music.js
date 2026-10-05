@@ -73,6 +73,10 @@ const MUSIC_DATA = {
   }
 };
 
+// Mode Primer (1r ESO): només els nivells diatònics 1-3 (sense alteracions)
+const CURS1 = new URLSearchParams(location.search).get('curs') === '1';
+if (CURS1) MUSIC_DATA.campaign.length = 3;
+
 // Construeix una escala a partir de tònica + alteració + mode
 function buildScale(root, alteration, mode) {
   const majorIntervals = [2, 2, 1, 2, 2, 2, 1];

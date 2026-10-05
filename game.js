@@ -258,7 +258,7 @@ class GameEngine {
   }
 
   _pickTraps(correct, n) {
-    const pool = MUSIC_DATA.allNotes.filter(x => x !== correct);
+    const pool = MUSIC_DATA.allNotes.filter(x => x !== correct && !(CURS1 && /[#b]/.test(x.slice(2)))); // 1r: trampes sense alteracions
     for (let i = pool.length - 1; i > 0; i--) {
       const j = Math.floor(Math.random() * (i + 1));
       [pool[i], pool[j]] = [pool[j], pool[i]];
