@@ -75,7 +75,12 @@ const MUSIC_DATA = {
 
 // Mode Primer (1r ESO): només els nivells diatònics 1-3 (sense alteracions)
 const CURS1 = new URLSearchParams(location.search).get('curs') === '1';
-if (CURS1) MUSIC_DATA.campaign.length = 3;
+if (CURS1) {
+  MUSIC_DATA.campaign.length = 3;
+  // 1r: serp més lenta (220 ms/pas) i noms de nivell curts
+  const NOMS_1R = ["Nivell 1: L'escala de Do", "Nivell 2: Dues voltes", "Nivell 3: Tres voltes"];
+  MUSIC_DATA.campaign.forEach((l, i) => { l.name = NOMS_1R[i]; l.sequences.forEach(q => { q.speed = 220; }); });
+}
 
 // Construeix una escala a partir de tònica + alteració + mode
 function buildScale(root, alteration, mode) {

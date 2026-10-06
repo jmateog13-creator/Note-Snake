@@ -22,12 +22,12 @@ let activeScaleData     = null; // { sequences, name }
 // ─── Persistència (localStorage) ─────────────────────────────────────────────
 
 function _loadProgress() {
-  try { return parseInt(localStorage.getItem('noteSnake_maxUnlocked') || '1', 10); }
+  try { return parseInt(localStorage.getItem('noteSnake_maxUnlocked' + (CURS1 ? '_c1' : '')) || '1', 10); }
   catch { return 1; }
 }
 
 function _saveProgress(val) {
-  try { localStorage.setItem('noteSnake_maxUnlocked', String(val)); }
+  try { localStorage.setItem('noteSnake_maxUnlocked' + (CURS1 ? '_c1' : ''), String(val)); }
   catch {}
 }
 
@@ -111,21 +111,23 @@ function _renderMenuPrincipal() {
     <div class="menu glass">
       <div class="title-block">
         <h1 class="title-neon">NOTE<br>SNAKE</h1>
-        <p class="title-sub">NEON SCALES</p>
+        <p class="title-sub">${CURS1 ? 'L\'ESCALA DE DO · 1r ESO' : 'NEON SCALES'}</p>
       </div>
       <div class="menu-buttons">
         <button id="btn-campana" class="btn btn-primary">
-          <span class="btn-icon">▶</span> Mode Campanya
+          <span class="btn-icon">▶</span> ${CURS1 ? 'Jugar' : 'Mode Campanya'}
         </button>
 
-        <button id="btn-maestro" class="btn btn-secondary">
+        ${CURS1 ? '' : `<button id="btn-maestro" class="btn btn-secondary">
           <span class="btn-icon">🎵</span> Mode Mestre
-        </button>
+        </button>`}
       </div>
       <div class="instructions">
-        <p>↑ ↓ ← → &nbsp;·&nbsp; WASD per moure</p>
+        ${CURS1 ? `<p>Mou la serp amb les fletxes.</p>
+        <p>Menja les notes en ordre: Do, Re, Mi, Fa, Sol, La, Si, Do.</p>
+        <p>Les altres notes són <span class="c-magenta">trampes</span>. Esquiva-les.</p>` : `<p>↑ ↓ ← → &nbsp;·&nbsp; WASD per moure</p>
         <p>Menja les notes <span class="c-cyan">correctes</span> en ordre.</p>
-        <p>Esquiva les trampes <span class="c-magenta">incorrectes</span>.</p>
+        <p>Esquiva les trampes <span class="c-magenta">incorrectes</span>.</p>`}
       </div>
     </div>
   `;
@@ -133,7 +135,7 @@ function _renderMenuPrincipal() {
   _enablePointer(wrap);
 
   wrap.querySelector('#btn-campana').onclick = () => transitionTo(STATE.MENU_NIVELLS);
-  wrap.querySelector('#btn-maestro').onclick = () => transitionTo(STATE.MENU_MAESTRO);
+  if (!CURS1) wrap.querySelector('#btn-maestro').onclick = () => transitionTo(STATE.MENU_MAESTRO);
 }
 
 // ─── MENU NIVELLS ─────────────────────────────────────────────────────────────
