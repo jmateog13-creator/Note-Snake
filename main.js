@@ -44,15 +44,19 @@ engine.onSequenceComplete = (seqIdx, score) => {
   _hudNewSequence(seqIdx, score);
 };
 
+// Precisió = notes correctes / notes menjades (les topades amb la paret no són error de lectura).
+const _precisio = () => { const t = engine.encerts + engine.errades; return t ? engine.encerts / t : 0; };
+
 engine.onGameOver = (score, progress) => {
-  window.Bridge?.send({ completat: false, errors: 1 });
+  window.Bridge?.send({ completat: false, errors: engine.errades, precisio: _precisio() });
   transitionTo(STATE.GAME_OVER, { score, progress });
 };
 
 engine.onVictory = (score) => {
   const isLastLevel = currentCampaignIdx !== null && currentCampaignIdx >= MUSIC_DATA.campaign.length - 1;
-  window.Bridge?.send({ completat: true, perfecte: true });
-  if (isLastLevel) window.Bridge?.sendOnce({ id: 'note-snake-complet', completat: true, perfecte: true });
+  const precisio = _precisio(), errors = engine.errades;
+  window.Bridge?.send({ completat: true, perfecte: errors === 0, precisio, errors });
+  if (isLastLevel) window.Bridge?.sendOnce({ id: 'note-snake-complet', completat: true, perfecte: errors === 0, precisio, errors });
   if (currentCampaignIdx !== null) {
     const completedLevel = currentCampaignIdx + 1; // 1-based
     if (completedLevel >= _maxUnlocked && completedLevel < MUSIC_DATA.campaign.length) {

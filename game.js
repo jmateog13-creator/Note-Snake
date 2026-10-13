@@ -98,6 +98,8 @@ class GameEngine {
     this.flashAlpha = 0;
     this.isRunning  = true;
     this.vides      = 3;      // tres oportunitats per partida (28-09-2026)
+    this.encerts    = 0;      // notes correctes menjades (precisió)
+    this.errades    = 0;      // notes trampa menjades
 
     this._applySequence(sequences[0]);
 
@@ -196,6 +198,7 @@ class GameEngine {
   _eatCorrect() {
     // tail stays (snake grows by 1)
     this.score += 100 + this.progress * 15;
+    this.encerts++;
     this.progress++;
 
     const head = this.snake[0];
@@ -223,6 +226,7 @@ class GameEngine {
   }
 
   _eatWrong(nx, ny) {
+    this.errades++;
     this._burst(nx, ny, C.noteTrap, 22);
     this.flashColor = C.flashRed;
     this.flashAlpha = 1.0;
