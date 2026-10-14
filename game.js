@@ -177,6 +177,7 @@ class GameEngine {
       this.vides -= 1;
       this.flashColor = C.flashRed;
       this.flashAlpha = 1.0;
+      if (this.onLifeLost) this.onLifeLost(this.vides, this.score);
       if (this.vides > 0) { this.snake = [{ x: head.x, y: head.y }]; this._spawnNotes(); return; }
       this._triggerGameOver(); return;
     }
@@ -226,7 +227,9 @@ class GameEngine {
   }
 
   _eatWrong(nx, ny) {
+    this.snake.pop();   // una trampa no fa créixer la serp (abans sí: premi per error)
     this.errades++;
+    this.score = Math.max(0, this.score - 50);   // l'error es nota al marcador
     this._burst(nx, ny, C.noteTrap, 22);
     this.flashColor = C.flashRed;
     this.flashAlpha = 1.0;
@@ -235,13 +238,15 @@ class GameEngine {
     // ha d'ensenyar, no expulsar.
     if (this.vides === undefined) this.vides = 3;
     this.vides -= 1;
+    if (this.onLifeLost) this.onLifeLost(this.vides, this.score);
     if (this.vides > 0) { this._spawnNotes(); return; }
     this._triggerGameOver();
   }
 
   _triggerGameOver() {
     this.isRunning = false;
-    setTimeout(() => { if (this.onGameOver) this.onGameOver(this.score, this.progress); }, 450);
+    // Progrés = notes correctes de TOTA la partida (abans: només la passada actual sobre el total de passades).
+    setTimeout(() => { if (this.onGameOver) this.onGameOver(this.score, this.encerts); }, 450);
   }
 
   _spawnNotes() {

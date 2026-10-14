@@ -40,6 +40,13 @@ engine.onNoteEaten = (progress, score) => {
   _hudUpdate(progress, score);
 };
 
+engine.onLifeLost = (vides, score) => {
+  const v = document.getElementById('hud-vides');
+  if (v) v.textContent = vides > 0 ? '♥'.repeat(vides) : '—';
+  const s = document.getElementById('hud-score');
+  if (s) s.textContent = score;
+};
+
 engine.onSequenceComplete = (seqIdx, score) => {
   _hudNewSequence(seqIdx, score);
 };
@@ -55,7 +62,9 @@ engine.onGameOver = (score, progress) => {
 engine.onVictory = (score) => {
   const isLastLevel = currentCampaignIdx !== null && currentCampaignIdx >= MUSIC_DATA.campaign.length - 1;
   const precisio = _precisio(), errors = engine.errades;
-  window.Bridge?.send({ completat: true, perfecte: errors === 0, precisio, errors });
+  // §3.1 Pagaments: completat només en acabar la campanya sencera. Abans cada
+  // nivell superat (fins i tot el 1) enviava completat:true → cobrava i treia el cartell.
+  window.Bridge?.send({ completat: false /* paga només 'note-snake-complet', un cop */, perfecte: errors === 0, precisio, errors });
   if (isLastLevel) window.Bridge?.sendOnce({ id: 'note-snake-complet', completat: true, perfecte: errors === 0, precisio, errors });
   if (currentCampaignIdx !== null) {
     const completedLevel = currentCampaignIdx + 1; // 1-based
@@ -276,6 +285,10 @@ function _renderHUD({ sequences, levelName }) {
         <span class="hud-level">${levelName}</span>
         ${total > 1 ? `<span id="hud-passada" class="hud-passada">Passada <b>1</b> / ${total}</span>` : ''}
       </div>
+      <div class="hud-block">
+        <span class="hud-label">VIDES</span>
+        <span id="hud-vides" class="hud-value">♥♥♥</span>
+      </div>
       <div class="hud-block hud-right">
         <span class="hud-label">MENJA</span>
         <span id="hud-next" class="hud-note">${firstScale[0]}</span>
@@ -416,6 +429,14 @@ function _renderVictory({ score }) {
         <div class="stat stat-big">
           <span class="stat-label">PUNTUACIÓ FINAL</span>
           <span class="stat-value glow-cyan">${score}</span>
+        </div>
+        <div class="stat">
+          <span class="stat-label">PRECISIÓ</span>
+          <span class="stat-value">${Math.round(_precisio() * 100)}%</span>
+        </div>
+        <div class="stat">
+          <span class="stat-label">TRAMPES</span>
+          <span class="stat-value">${engine.errades}</span>
         </div>
       </div>
       <div class="menu-buttons">
