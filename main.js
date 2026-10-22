@@ -137,7 +137,7 @@ function _renderMenuPrincipal() {
       </div>
       <div class="instructions">
         ${CURS1 ? `<p>Mou la serp amb les fletxes.</p>
-        <p>Menja les notes en ordre: Do, Re, Mi, Fa, Sol, La, Si, Do.</p>
+        <p>Menja les notes de l'escala en ordre: Do, Re, Mi, Fa, Sol, La, Si, Do (i després, de baixada).</p>
         <p>Les altres notes són <span class="c-magenta">trampes</span>. Esquiva-les.</p>` : `<p>↑ ↓ ← → &nbsp;·&nbsp; WASD per moure</p>
         <p>Menja les notes <span class="c-cyan">correctes</span> en ordre.</p>
         <p>Esquiva les trampes <span class="c-magenta">incorrectes</span>.</p>`}

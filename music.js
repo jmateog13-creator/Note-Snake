@@ -73,13 +73,21 @@ const MUSIC_DATA = {
   }
 };
 
-// Mode Primer (1r ESO): només els nivells diatònics 1-3 (sense alteracions)
+// Mode Primer (1r ESO): 6 nivells, només l'escala de Do natural (sense alteracions).
+// Política 1★: mínim 6 nivells. 1-2 pugen; del 3 entra la baixada (Do → Si → … → Do).
+// Serp més lenta (220 ms/pas). ~10 passades × 8 notes ≈ 4-5 min.
 const CURS1 = new URLSearchParams(location.search).get('curs') === '1';
 if (CURS1) {
-  MUSIC_DATA.campaign.length = 3;
-  // 1r: serp més lenta (220 ms/pas) i noms de nivell curts
-  const NOMS_1R = ["Nivell 1: L'escala de Do", "Nivell 2: Dues voltes", "Nivell 3: Tres voltes"];
-  MUSIC_DATA.campaign.forEach((l, i) => { l.name = NOMS_1R[i]; l.sequences.forEach(q => { q.speed = 220; }); });
+  const UP = DIATONIC, DOWN = DIATONIC.slice().reverse();
+  const sq = (scale, trapCount, coloredNotes) => ({ scale, speed: 220, trapCount, coloredNotes });
+  MUSIC_DATA.campaign = [
+    { level: 1, name: "Nivell 1: L'escala de Do", sequences: [sq(UP, 2, true)] },
+    { level: 2, name: "Nivell 2: Dues voltes",    sequences: [sq(UP, 2, true), sq(UP, 3, true)] },
+    { level: 3, name: "Nivell 3: Baixada",        sequences: [sq(DOWN, 2, true)] },
+    { level: 4, name: "Nivell 4: Puja i baixa",   sequences: [sq(UP, 3, true), sq(DOWN, 3, true)] },
+    { level: 5, name: "Nivell 5: Més trampes",    sequences: [sq(UP, 4, true), sq(DOWN, 4, true)] },
+    { level: 6, name: "Nivell 6: Sense colors",   sequences: [sq(UP, 3, false), sq(DOWN, 3, false)] },
+  ];
 }
 
 // Construeix una escala a partir de tònica + alteració + mode
